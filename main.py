@@ -31,11 +31,12 @@ def task3():
     arcpy.MakeFeatureLayer_management(roads, 'roads_layer', """ continent = 'Asia' """)
     arcpy.FeatureClassToFeatureClass_conversion('roads_layer', output, 'roads3')
     with arcpy.da.SearchCursor('roads_layer', ['name','continent']) as RC:
+        count=0
         for x in RC:
-         if x[1] == 'Asia':
+            count+=1
             if x[0] != " ":
                 print(x[0])
-
+        print (count)
 
 # Task 4
 def task4():
@@ -49,9 +50,9 @@ def task4():
 
 # Task 5
 def task5():
-    Arabic_countries = ['Egypt', 'Saudi Arabia', 'Iraq', 'Jordan', 'United Arab Emirates', 'Lebanon', 'Tunisia',
-                        'Algeria', 'Morocco', 'Oman', 'Qatar', 'Bahrain', 'Yemen', 'Sudan', 'Syria']
-
+    Arabic_countries = ['Palestine', 'Lebanon', 'S. Sudan', 'Somalia', 'Syria', 'Morocco', 'Oman', 'United Arab Emirates',
+                        'Libya', 'Tunisia', 'Sudan', 'Djibouti', 'Qatar', 'Saudi Arabia', 'Kuwait',
+                        'Algeria', 'Jordan', 'Egypt', 'Yemen', 'Mauritania', 'Comoros', 'Bahrain']
     arcpy.MakeFeatureLayer_management(points, 'point_layer')
     # part1
     # for x in Arabic_countries:
@@ -116,7 +117,7 @@ def task12():
     for feild in fields:
         with arcpy.da.UpdateCursor(points, [feild])as city_cursor:
             for x in city_cursor:
-                if x[0] ==0:
+                if x[0] ==0 or x[0]==None:
                     x[0] = 1
                     city_cursor.updateRow(x)
                     print (feild)
